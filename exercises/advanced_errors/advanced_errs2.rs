@@ -47,11 +47,17 @@ impl From<ParseIntError> for ParseClimateError {
 impl From<ParseFloatError> for ParseClimateError {
     fn from(e: ParseFloatError) -> Self {
         // TODO: Complete this function
+        ParseClimateError::ParseFloat(e)
     }
 }
 
 // TODO: Implement a missing trait so that `main()` below will compile. It
 // is not necessary to implement any methods inside the missing trait.
+impl From<Empty> for ParseClimateError {
+    fn from(e: Empty) -> Self {
+        ParseClimateError::Empty(e)
+    }
+}
 
 // The `Display` trait allows for other code to obtain the error formatted
 // as a user-visible string.
@@ -64,6 +70,7 @@ impl Display for ParseClimateError {
         match self {
             NoCity => write!(f, "no city name"),
             ParseFloat(e) => write!(f, "error parsing temperature: {}", e),
+            _ => write!(f, "unhandled error!"),
         }
     }
 }
